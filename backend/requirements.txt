@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+python-jose
+passlib[bcrypt]
+SQLAlchemy
+psycopg2-binary
+pydantic
+pytesseract
+Pillow
+pdf2image
+email-validator
+python-multipart
+alembic
