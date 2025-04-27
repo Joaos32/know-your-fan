@@ -5,14 +5,16 @@ class SocialAccountCreate(BaseModel):
     access_token: str
     username: str | None = None
     profile_url: str | None = None
-    user_id: int  
 
 class SocialAccountOut(BaseModel):
     id: int
     provider: str
     username: str | None = None
     profile_url: str | None = None
-    user_id: int
 
     class Config:
         orm_mode = True
+
+# 🔥 Adicionar esta classe que falta:
+class SocialAccountResponse(SocialAccountOut):
+    pass
