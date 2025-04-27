@@ -4,7 +4,7 @@ from app.core.security import get_current_user
 from app.crud.crud_social import get_user_social_accounts
 from app.models.user import User
 from app.schemas.social_account import SocialAccountCreate, SocialAccountResponse
-from app.crud import social_crud
+from app.crud import crud_social as social_crud
 from app.core.database import get_db
 from app.services.social_analysis_service import analyze_social_accounts
 
