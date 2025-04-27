@@ -1,17 +1,16 @@
+import shutil
 import os
 from fastapi import UploadFile
-from uuid import uuid4
 
-UPLOAD_DIR = "uploads"
+UPLOAD_DIRECTORY = "uploads"
 
 async def save_upload_file(upload_file: UploadFile) -> str:
-    if not os.path.exists(UPLOAD_DIR):
-        os.makedirs(UPLOAD_DIR)
+    if not os.path.exists(UPLOAD_DIRECTORY):
+        os.makedirs(UPLOAD_DIRECTORY)
 
-    file_ext = upload_file.filename.split(".")[-1]
-    file_path = os.path.join(UPLOAD_DIR, f"{uuid4()}.{file_ext}")
+    file_location = os.path.join(UPLOAD_DIRECTORY, upload_file.filename)
 
-    with open(file_path, "wb") as buffer:
-        buffer.write(await upload_file.read())
+    with open(file_location, "wb") as buffer:
+        shutil.copyfileobj(upload_file.file, buffer)
 
-    return file_path
+    return file_location
