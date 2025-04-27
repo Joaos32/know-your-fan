@@ -6,12 +6,11 @@ class SocialAccountCreate(BaseModel):
     username: str | None = None
     profile_url: str | None = None
 
-class SocialAccountResponse(BaseModel):
+class SocialAccountOut(BaseModel):
     id: int
     provider: str
     username: str | None = None
     profile_url: str | None = None
 
-    model_config = {
-        "from_attributes": True
-    }
+    class Config:
+        from_attributes = True
