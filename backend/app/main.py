@@ -1,8 +1,9 @@
+import os
+import uvicorn
 from fastapi import FastAPI
 from app.api.v1.endpoints import auth, users, upload, social
 from app.models import user, social_account
 from fastapi.middleware.cors import CORSMiddleware
-import os
 
 app = FastAPI(
     title="Know Your Fan API",
@@ -19,9 +20,10 @@ app = FastAPI(
     }
 )
 
+# Middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Em produção, troque "*" pelos domínios permitidos
+    allow_origins=["*"],  # Em produção, configure os domínios específicos
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -33,9 +35,7 @@ app.include_router(users.router, prefix="/users", tags=["Users"])
 app.include_router(upload.router, prefix="/upload", tags=["Upload"])
 app.include_router(social.router, prefix="/social", tags=["Social"])
 
-# Código para rodar o Uvicorn, adaptado para Railway
+# Execução do servidor Uvicorn (Railway usa variável de ambiente PORT)
 if __name__ == "__main__":
-    import uvicorn
-
-    port = int(os.environ.get("PORT", 8000))  # Usa a porta definida pela Railway ou 8000 localmente
+    port = int(os.environ.get("PORT", 8000))
     uvicorn.run("app.main:app", host="0.0.0.0", port=port)
