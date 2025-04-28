@@ -34,8 +34,3 @@ app.include_router(auth.router, prefix="/auth", tags=["Auth"])
 app.include_router(users.router, prefix="/users", tags=["Users"])
 app.include_router(upload.router, prefix="/upload", tags=["Upload"])
 app.include_router(social.router, prefix="/social", tags=["Social"])
-
-# Execução do servidor Uvicorn (Railway usa variável de ambiente PORT)
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))
-    uvicorn.run("app.main:app", host="0.0.0.0", port=port)
