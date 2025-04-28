@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 class SocialAccountCreate(BaseModel):
     provider: str
@@ -8,9 +8,10 @@ class SocialAccountCreate(BaseModel):
 
 class SocialAccountOut(BaseModel):
     id: int
-    provider: str
-    username: str | None = None
-    profile_url: str | None = None
+    platform: str
+    username: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
+
+class MySchema(BaseModel):
+    model_config = ConfigDict(from_attributes=True)

@@ -1,3 +1,4 @@
+import os
 from passlib.context import CryptContext
 from jose import jwt, JWTError
 from datetime import datetime, timedelta
@@ -9,7 +10,7 @@ from app.models.user import User
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-SECRET_KEY = "super-secret-key"  # mudar em produção
+SECRET_KEY = os.getenv("SECRET_KEY", "super-secret-key") 
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
