@@ -11,3 +11,4 @@ pdf2image
 email-validator
 python-multipart
 alembic
+python-dotenv
