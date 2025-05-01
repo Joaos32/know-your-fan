@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Know Your Fan</title>
+  <style>
+    :root {
+      --furia-black: #0d0d0d;
+      --furia-red: #ff003c;
+      --furia-white: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--furia-black);
+      color: var(--furia-white);
+    }
+
+    header {
+      background-color: var(--furia-red);
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      background-color: #1a1a1a;
+      padding: 1rem;
+    }
+
+    nav button {
+      background-color: var(--furia-red);
+      border: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 4px;
+    }
+
+    nav button:hover {
+      background-color: #cc0033;
+    }
+
+    section {
+      display: none;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    .logo {
+      max-height: 40px;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://furia.gg/img/furia-logo-header.svg" alt="FURIA" class="logo"> Know Your Fan 🎮
+  </header>
+
+  <nav>
+    <button onclick="showSection('home')">Home</button>
+    <button onclick="showSection('perfil')">Perfil</button>
+    <button onclick="showSection('analise')">Análise</button>
+    <button onclick="showSection('about')">Sobre</button>
+  </nav>
+
+  <main>
+    <section id="home" class="active">
+      <h1>Bem-vindo ao Know Your Fan</h1>
+      <p>Descubra seu perfil como fã dos jogos da FURIA!</p>
+    </section>
+
+    <section id="perfil">
+      <h2>Perfil do Fã</h2>
+      <p>Veja seus dados de engajamento e preferências de jogo.</p>
+    </section>
+
+    <section id="analise">
+      <h2>Análise Social</h2>
+      <p>Análise personalizada baseada nas suas redes sociais e interações.</p>
+    </section>
+
+    <section id="about">
+      <h2>Sobre</h2>
+      <p>Projeto Know Your Fan para fãs da FURIA Esports.</p>
+    </section>
+  </main>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
+</body>
+</html>
