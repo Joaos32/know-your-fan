@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api.v1.endpoints import auth, users, upload, social
-from app.models import user, social_account  # Garante que os modelos sejam registrados
+from app.api.v1.endpoints import auth, users, upload, social, fan
+from app.models import user, social_account, fan as fan_model  # ✅ fan_model importa o modelo com Base
+from app.core.database import engine
 
 app = FastAPI(
     title="Know Your Fan API",
@@ -10,7 +11,7 @@ app = FastAPI(
     contact={
         "name": "João Vitor",
         "url": "https://github.com/Joaos32/know-your-fan",
-        "email": "seuemail@exemplo.com",  # ajuste se quiser
+        "email": "seuemail@exemplo.com",
     },
     license_info={
         "name": "MIT License",
@@ -18,10 +19,9 @@ app = FastAPI(
     }
 )
 
-# Middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Em produção, configure os domínios específicos
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -32,3 +32,7 @@ app.include_router(auth.router, prefix="/auth", tags=["Auth"])
 app.include_router(users.router, prefix="/users", tags=["Users"])
 app.include_router(upload.router, prefix="/upload", tags=["Upload"])
 app.include_router(social.router, prefix="/social", tags=["Social"])
+app.include_router(fan.router, prefix="/fan", tags=["Fan"])  # ✅ rota de fan
+
+# Criar tabelas
+fan_model.Base.metadata.create_all(bind=engine)
