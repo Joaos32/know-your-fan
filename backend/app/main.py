@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1.endpoints import auth, users, upload, social, fan
 from app.models import user, social_account, fan as fan_model  # ✅ fan_model importa o modelo com Base
 from app.core.database import engine
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI(
     title="Know Your Fan API",
@@ -33,6 +34,7 @@ app.include_router(users.router, prefix="/users", tags=["Users"])
 app.include_router(upload.router, prefix="/upload", tags=["Upload"])
 app.include_router(social.router, prefix="/social", tags=["Social"])
 app.include_router(fan.router, prefix="/fan", tags=["Fan"])  # ✅ rota de fan
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 # Criar tabelas
 fan_model.Base.metadata.create_all(bind=engine)

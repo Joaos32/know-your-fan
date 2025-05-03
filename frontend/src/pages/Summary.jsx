@@ -42,15 +42,49 @@ export default function Summary() {
           <Text><strong>Nome:</strong> {dadosFinais.nome}</Text>
           <Text><strong>CPF:</strong> {dadosFinais.cpf}</Text>
           <Text><strong>Endereço:</strong> {dadosFinais.endereco}</Text>
+
           <Divider my="sm" label="Interesses" />
           <Text><strong>Jogos:</strong> {dadosFinais.jogosFavoritos.join(', ')}</Text>
           <Text><strong>Atividades/Eventos:</strong> {dadosFinais.eventos}</Text>
+
           <Divider my="sm" label="Documento" />
-          <Text><strong>Comprovante:</strong> {dadosFinais.comprovante}</Text>
+          {dadosFinais.comprovante && (
+            <div style={{ marginTop: 12 }}>
+              <strong>Comprovante:</strong>{' '}
+              {/\.(jpe?g|png|gif|bmp)$/i.test(dadosFinais.comprovante) ? (
+                <div>
+                  <img
+                    src={`http://localhost:8000/uploads/${dadosFinais.comprovante}`}
+                    alt="Comprovante"
+                    style={{
+                      maxWidth: '100%',
+                      maxHeight: 300,
+                      borderRadius: 8,
+                      marginTop: 8,
+                      border: '1px solid #ddd'
+                    }}
+                  />
+                </div>
+              ) : /\.(pdf)$/i.test(dadosFinais.comprovante) ? (
+                <a
+                  href={`http://localhost:8000/uploads/${dadosFinais.comprovante}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#4dabf7", textDecoration: "underline" }}
+                >
+                  Visualizar PDF
+                </a>
+              ) : (
+                <span>{dadosFinais.comprovante}</span>
+              )}
+            </div>
+          )}
+
           <Divider my="sm" label="Redes Sociais" />
           <Text><strong>Instagram:</strong> {dadosFinais.instagram}</Text>
           <Text><strong>Twitter:</strong> {dadosFinais.twitter}</Text>
           <Text><strong>Perfil eSports:</strong> {dadosFinais.linkPerfil}</Text>
+
           <Button fullWidth mt="xl" onClick={voltar}>Voltar à página inicial</Button>
           <Button variant="light" color="violet" mt="sm" fullWidth onClick={gerarPDF}>Baixar PDF</Button>
         </Paper>
