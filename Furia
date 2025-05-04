@@ -1,0 +1,30 @@
+🎮 Know Your Fan — Plataforma de Cadastro de Fãs da FURIA Esports
+Know Your Fan é uma aplicação web interativa criada para engajar fãs da FURIA Esports. A plataforma permite que usuários se cadastrem, preencham seu perfil com informações pessoais e preferências de jogos, anexem comprovantes (como RG ou CNH), e gerem automaticamente um resumo em PDF com seu perfil completo.
+
+O projeto conta com:
+
+🔐 Formulário multietapas com validações e máscara de CPF
+
+📁 Upload de arquivos (PDF ou imagem) com pré-visualização
+
+💾 Armazenamento de dados no localStorage
+
+📝 Geração de PDF do perfil completo com html2canvas + jsPDF
+
+🌌 Interface visual inspirada na identidade da FURIA (dark theme + partículas + animações com framer-motion)
+
+📱 Links sociais para Instagram, Twitter e portal oficial
+
+⚙️ Separação de pastas para frontend (React + Mantine UI) e backend (FastAPI)
+
+Tecnologias utilizadas:
+
+Frontend: React.js + Mantine UI + Framer Motion
+
+Backend: FastAPI (em desenvolvimento)
+
+Deploy: GitHub Pages (opcional)
+
+Estilização: CSS customizado + imagem de fundo temática
+
+Outras libs: jsPDF, html2canvas, IMask, react-router-dom
