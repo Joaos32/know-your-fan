@@ -59,7 +59,7 @@ export default function Home() {
           />
 
           <Group position="center" spacing="xl" mt="xl">
-            <a href="https://www.instagram.com/furia" target="_blank" rel="noopener noreferrer" style={iconStyle}>
+            <a href="https://www.instagram.com/furiagg" target="_blank" rel="noopener noreferrer" style={iconStyle}>
               <FaInstagram />
             </a>
             <a href="https://twitter.com/furia" target="_blank" rel="noopener noreferrer" style={iconStyle}>
