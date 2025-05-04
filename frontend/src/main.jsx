@@ -4,7 +4,6 @@ import App from './App';
 import { MantineProvider, createTheme } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 
-// 🎨 Tema customizado
 const theme = createTheme({
   primaryColor: 'violet',
   colors: {

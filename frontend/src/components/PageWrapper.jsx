@@ -2,14 +2,25 @@ import { motion } from 'framer-motion';
 import { FaInstagram, FaTwitter, FaGlobe } from 'react-icons/fa';
 import Navbar from './Navbar';
 import ParticlesBackground from './ParticlesBackground';
+import background from '../assets/background.png'; // ✅ sua imagem
 import './Footer.css';
 
-// ✅ Criar componente MotionDiv com API atualizada
-const MotionDiv = motion.create('div');
+const MotionDiv = motion.div;
 
 export default function PageWrapper({ children }) {
   return (
-    <>
+    <div
+      style={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundImage: `url(${background})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        color: '#ffffff' // ✅ Cor clara aplicada globalmente ao conteúdo
+      }}
+    >
       <ParticlesBackground />
 
       <Navbar />
@@ -19,7 +30,7 @@ export default function PageWrapper({ children }) {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.4 }}
-        style={{ minHeight: 'calc(100vh - 140px)' }}
+        style={{ flex: 1, paddingBottom: '2rem' }}
       >
         {children}
       </MotionDiv>
@@ -40,6 +51,6 @@ export default function PageWrapper({ children }) {
           </a>
         </div>
       </footer>
-    </>
+    </div>
   );
 }

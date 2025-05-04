@@ -30,15 +30,19 @@ export default function FanList() {
   return (
     <PageWrapper>
       <Container size="lg" py="xl">
-        <Title order={2} align="center" mb="lg">📋 Lista de Fãs Cadastrados</Title>
+        <Title order={2} align="center" mb="lg">
+          📋 Lista de Fãs Cadastrados
+        </Title>
 
         {loading ? (
-          <Loader size="lg" variant="bars" />
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <Loader size="lg" variant="bars" />
+          </div>
         ) : fans.length === 0 ? (
           <Text align="center">Nenhum fã encontrado.</Text>
         ) : (
           <Paper shadow="md" p="md" radius="md" withBorder>
-            <Table striped highlightOnHover>
+            <Table striped highlightOnHover verticalSpacing="md" fontSize="sm">
               <thead>
                 <tr>
                   <th>Nome</th>
@@ -51,14 +55,14 @@ export default function FanList() {
               <tbody>
                 {fans.map((fan, index) => (
                   <motion.tr
-                    key={index}
+                    key={fan.cpf || index}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
                   >
                     <td>{fan.nome}</td>
                     <td>{fan.cpf}</td>
-                    <td>{fan.jogosFavoritos.join(', ')}</td>
+                    <td>{Array.isArray(fan.jogosFavoritos) ? fan.jogosFavoritos.join(', ') : ''}</td>
                     <td>{fan.instagram}</td>
                     <td>{fan.twitter}</td>
                   </motion.tr>

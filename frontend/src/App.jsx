@@ -4,7 +4,7 @@ import Home from './pages/Home';
 import StepperForm from './components/StepperForm';
 import Summary from './pages/Summary';
 import FanList from './pages/FanList';
-import Layout from './components/Layout';
+import PageWrapper from './components/PageWrapper'; 
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -24,9 +24,10 @@ function AnimatedRoutes() {
 export default function App() {
   return (
     <BrowserRouter>
-      <Layout>
+      {/* PageWrapper envolve toda a aplicação com Navbar, Particles e Footer */}
+      <PageWrapper>
         <AnimatedRoutes />
-      </Layout>
+      </PageWrapper>
     </BrowserRouter>
   );
 }

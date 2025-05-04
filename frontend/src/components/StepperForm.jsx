@@ -34,35 +34,38 @@ export default function StepperForm() {
       linkPerfil: '',
     },
     validate: {
+      nome: (value) => (value.trim().length > 1 ? null : 'Nome obrigatório'),
       cpf: (value) =>
         /^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(value) ? null : 'CPF inválido',
+      endereco: (value) => (value.trim().length > 5 ? null : 'Endereço obrigatório'),
+      comprovante: (value) => (!value ? 'Comprovante obrigatório' : null),
     },
   });
 
   useEffect(() => {
     if (cpfRef.current) {
-      const mask = IMask(cpfRef.current, {
-        mask: '000.000.000-00',
-      });
-
+      const mask = IMask(cpfRef.current, { mask: '000.000.000-00' });
       mask.on('accept', () => {
         form.setFieldValue('cpf', mask.value);
       });
-
       return () => mask.destroy();
     }
-  }, []);
+  }, [form]);
 
-  const nextStep = () => setActive((current) => (current < 4 ? current + 1 : current));
+  const nextStep = () => {
+    const hasErrors = form.validate().hasErrors;
+    if (hasErrors) return;
+    setActive((current) => (current < 4 ? current + 1 : current));
+  };
+
   const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
 
   const submitForm = () => {
     if (!form.isValid()) {
       showNotification({
         title: 'Erro no formulário',
-        message: 'Por favor, preencha todos os campos obrigatórios antes de continuar.',
+        message: 'Preencha corretamente todos os campos obrigatórios.',
         color: 'red',
-        autoClose: 4000,
       });
       return;
     }
@@ -73,7 +76,6 @@ export default function StepperForm() {
       title: 'Sucesso!',
       message: 'Seu perfil de fã foi salvo com sucesso 🎉',
       color: 'green',
-      autoClose: 3000,
     });
 
     navigate('/resumo');
@@ -84,8 +86,13 @@ export default function StepperForm() {
       <Container size="sm" py="xl">
         <form onSubmit={form.onSubmit(submitForm)}>
           <Stepper active={active} onStepClick={setActive} breakpoint="sm">
+            {/* Etapa 1 */}
             <Stepper.Step label="Dados" description="Informações básicas">
-              <TextInput label="Nome completo" required {...form.getInputProps('nome')} />
+              <TextInput
+                label="Nome completo"
+                required
+                {...form.getInputProps('nome')}
+              />
               <TextInput
                 label="CPF"
                 required
@@ -93,9 +100,14 @@ export default function StepperForm() {
                 value={form.values.cpf}
                 error={form.errors.cpf}
               />
-              <TextInput label="Endereço" required {...form.getInputProps('endereco')} />
+              <TextInput
+                label="Endereço"
+                required
+                {...form.getInputProps('endereco')}
+              />
             </Stepper.Step>
 
+            {/* Etapa 2 */}
             <Stepper.Step label="Interesses" description="Perfil de fã">
               <Checkbox.Group
                 label="Quais jogos você acompanha?"
@@ -107,39 +119,58 @@ export default function StepperForm() {
                 <Checkbox value="FIFA" label="FIFA" />
               </Checkbox.Group>
               <Textarea
-                label="Eventos que participou ou produtos que comprou no último ano"
+                label="Eventos ou produtos adquiridos"
+                autosize
+                minRows={3}
                 {...form.getInputProps('eventos')}
               />
             </Stepper.Step>
 
-            <Stepper.Step label="Documento" description="Comprovante de identidade">
+            {/* Etapa 3 */}
+            <Stepper.Step label="Documento" description="Identidade oficial">
               <FileInput
-                label="Upload de RG ou CNH"
-                placeholder="Arraste o arquivo ou clique"
+                label="RG ou CNH (PDF ou imagem)"
+                placeholder="Selecione o arquivo"
                 required
+                accept="image/*,.pdf"
                 value={form.values.comprovante}
+                error={form.errors.comprovante}
                 onChange={(file) => form.setFieldValue('comprovante', file)}
               />
               {form.values.comprovante && (
                 <Text size="sm" mt="xs">
-                  Arquivo selecionado: {form.values.comprovante.name}
+                  Arquivo: {form.values.comprovante.name}
                 </Text>
               )}
             </Stepper.Step>
 
-            <Stepper.Step label="Social" description="Links e perfis">
-              <TextInput label="Instagram" placeholder="@seuperfil" {...form.getInputProps('instagram')} />
-              <TextInput label="Twitter" placeholder="@seuperfil" {...form.getInputProps('twitter')} />
+            {/* Etapa 4 */}
+            <Stepper.Step label="Redes" description="Perfis sociais">
               <TextInput
-                label="Link de perfil em site de eSports"
+                label="Instagram"
+                placeholder="@seuperfil"
+                {...form.getInputProps('instagram')}
+              />
+              <TextInput
+                label="Twitter"
+                placeholder="@seuperfil"
+                {...form.getInputProps('twitter')}
+              />
+              <TextInput
+                label="Link do perfil eSports"
                 placeholder="https://..."
                 {...form.getInputProps('linkPerfil')}
               />
             </Stepper.Step>
 
+            {/* Final */}
             <Stepper.Completed>
-              <p>Revise seus dados e clique em "Enviar".</p>
-              <pre>{JSON.stringify(form.values, null, 2)}</pre>
+              <Text align="center" mt="md" color="white">
+                Revise os dados e clique em "Enviar".
+              </Text>
+              <pre style={{ fontSize: '0.8rem', color: '#ccc', background: '#111', padding: 12, borderRadius: 8 }}>
+                {JSON.stringify(form.values, null, 2)}
+              </pre>
             </Stepper.Completed>
           </Stepper>
 
