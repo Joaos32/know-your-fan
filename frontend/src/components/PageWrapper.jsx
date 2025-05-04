@@ -1,17 +1,20 @@
 import { motion } from 'framer-motion';
 import { FaInstagram, FaTwitter, FaGlobe } from 'react-icons/fa';
-import Navbar from './Navbar'; // ✅ Reintegrado aqui
+import Navbar from './Navbar';
 import ParticlesBackground from './ParticlesBackground';
 import './Footer.css';
+
+// ✅ Criar componente MotionDiv com API atualizada
+const MotionDiv = motion.create('div');
 
 export default function PageWrapper({ children }) {
   return (
     <>
       <ParticlesBackground />
 
-      <Navbar /> {/* ✅ Navbar única e centralizada na aplicação */}
+      <Navbar />
 
-      <motion.main
+      <MotionDiv
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
@@ -19,7 +22,7 @@ export default function PageWrapper({ children }) {
         style={{ minHeight: 'calc(100vh - 140px)' }}
       >
         {children}
-      </motion.main>
+      </MotionDiv>
 
       <footer className="footer">
         <div className="footer-text">
